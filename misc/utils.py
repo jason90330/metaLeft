@@ -54,7 +54,8 @@ def weights_init_xavier(m):
         if m.bias is not None:
             init.constant_(m.bias.data, 0.0)
     elif classname.find('BatchNorm2d') != -1:
-        init.uniform(m.weight.data, 1.0, 0.02)
+        # init.uniform(m.weight.data, 1.0, 0.02)
+        init.uniform(m.weight.data, 0.02, 1.0)
         init.constant_(m.bias.data, 0.0)
 
 
@@ -68,7 +69,8 @@ def weights_init_normal(m):
         if m.bias is not None:
             init.constant_(m.bias.data, 0.0)
     elif classname.find('BatchNorm2d') != -1:
-        init.uniform(m.weight.data, 1.0, 0.02)
+        # init.uniform(m.weight.data, 1.0, 0.02)
+        init.uniform(m.weight.data, 0.02, 1.0)
         init.constant_(m.bias.data, 0.0)
 
 def weights_init_kaiming(m):
@@ -81,7 +83,8 @@ def weights_init_kaiming(m):
         if m.bias is not None:
             init.constant_(m.bias.data, 0.0)
     elif classname.find('BatchNorm2d') != -1:
-        init.uniform(m.weight.data, 1.0, 0.02)
+        # init.uniform(m.weight.data, 1.0, 0.02)
+        init.uniform(m.weight.data, 0.02, 1.0)
         init.constant_(m.bias.data, 0.0)
 
 def weights_init_orthogonal(m):
@@ -94,7 +97,8 @@ def weights_init_orthogonal(m):
         if m.bias is not None:
             init.constant_(m.bias.data, 0.0)
     elif classname.find('BatchNorm2d') != -1:
-        init.uniform(m.weight.data, 1.0, 0.02)
+        # init.uniform(m.weight.data, 1.0, 0.02)
+        init.uniform(m.weight.data, 0.02, 1.0)
         init.constant_(m.bias.data, 0.0)
 
 def weights_init_orthogonal_rnn(m):

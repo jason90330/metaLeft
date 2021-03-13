@@ -90,7 +90,7 @@ class DepthEstmator(nn.Module):
 
 
 class FeatExtractor(nn.Module):
-    def __init__(self, in_channels=6):
+    def __init__(self, in_channels=6): # rgb+hsv
         super(FeatExtractor, self).__init__()  
 
         self.inc = inconv(in_channels, 64)
