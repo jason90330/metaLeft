@@ -1,5 +1,6 @@
 import os
 import torch
+import random
 from imutils import paths
 from torchvision import transforms, utils
 from torch.utils.data import Dataset, DataLoader
@@ -11,6 +12,8 @@ from pdb import set_trace as st
 def default_loader(path):
     RGBimg = Image.open(path).convert('RGB')
     HSVimg = Image.open(path).convert('HSV')
+    RGBimg = RGBimg.resize((260,260))
+    HSVimg = HSVimg.resize((260,260))
     return RGBimg, HSVimg
 
 
@@ -22,28 +25,33 @@ class DatasetLoader(Dataset):
         imgs = []
                 
         if name == 'Siw-m':
-            txt_path = "datasets/siw_metas/train_list.txt"
+            txt_path = "datasets/siw_metas/test_list.txt"
             imgPaths = list(paths.list_images(self.root+"Siw-m_similar_er"))
+            random.Random(4).shuffle(imgPaths)
             with open(txt_path) as input_file:    
                 foldLists = input_file.readlines()
                 # img_paths = list(paths.list_images(cfg.IMG_PATH))
                 # datas = [x.strip() for x in open(cfg.TEST_TXT_PATH)]
                 lenOfDatas=len(imgPaths)
-                for idx, img_path in enumerate(imgPaths):        
+                for idx, img_path in enumerate(imgPaths):   
+                    exist = False     
                     for line in foldLists:
                         testFolder = line.strip("\n")
                         if "Live" in img_path and "Test" in img_path:
                             label=0
+                            exist = True
                             break
                         elif testFolder in img_path:
                             label=1
+                            exist = True
                             break
                         else:
                             continue
                     # depth_dir = img_path.replace("Siw-m_similar_er", "Siw-m_similar_er_depth")
                     # if os.path.exists(depth_dir):
                     #     imgs.append((img_path, depth_dir, label))
-                    imgs.append((img_path, label))
+                    if exist:
+                        imgs.append((img_path, label))
         self.imgs = imgs
         self.transform = transform
         self.loader = loader

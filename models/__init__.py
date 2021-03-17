@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 
-from .DGFANet import *
+# from .DGFANet import *
 # from .DGFANetCustom import *
+from .DGFANetLambda import *
 
 __factory = {
     'FeatExtractor': FeatExtractor,

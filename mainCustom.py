@@ -22,9 +22,9 @@ def main(args):
 
     if args.training_type is 'Train':
         # savefilename = osp.join(args.dataset1+args.dataset2+args.dataset3+'1')
-        savefilename = osp.join(args.dataset1+args.dataset2+'1')
+        savefilename = osp.join(args.dataset1+"_"+args.dataset2)
     elif  args.training_type is 'Test':    
-        savefilename = osp.join(args.tstfile, args.tstdataset+'to'+args.dataset_target+args.snapshotnum) 
+        savefilename = osp.join(args.dataset1+"_"+args.dataset2+"_to_"+args.dataset_target+"_"+args.snapshotnum) 
 
     args.seed = init_random_seed(args.manual_seed)
 
@@ -48,11 +48,11 @@ def main(args):
         # data_loader3_real = get_dataset_loader(name=args.dataset3, getreal=True, batch_size=args.batchsize)
         # data_loader3_fake = get_dataset_loader(name=args.dataset3, getreal=False, batch_size=args.batchsize)
 
-        data_loader_target = get_tgtdataset_loader(name=args.dataset_target, batch_size=args.batchsize) 
+        # data_loader_target = get_tgtdataset_loader(name=args.dataset_target, batch_size=args.batchsize) 
 
     elif args.training_type is 'Test':
 
-        data_loader_target = get_tgtdataset_loader(name=args.dataset_target, batch_size=args.batchsize) 
+        data_loader_target = get_tgtdataset_loader(name=args.dataset_target, batch_size=args.test_batchsize) 
 
 
     ##################### load models##################### 
@@ -67,40 +67,35 @@ def main(args):
         DepthEst_restore = None
         FeatEmbd_restore = None
 
-    elif args.training_type is 'Test':
-        FeatExt_restore = osp.join('results', args.tstfile, 'snapshots', args.tstdataset, 'FeatExtor-'+args.snapshotnum+'.pt')
-        FeatEmbd_restore = osp.join('results', args.tstfile, 'snapshots', args.tstdataset, 'FeatEmbder-'+args.snapshotnum+'.pt')
-        DepthEst_restore = None
+        FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, parallel_reload=True)
+        DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, parallel_reload=True)
+        FeatEmbder= init_model(net=FeatEmbdmodel, init_type = args.init_type, restore=FeatEmbd_restore, parallel_reload=False)
 
-    else:
-        raise NotImplementedError('method type [%s] is not implemented' % args.training_type)
-
-    
-    FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, parallel_reload=True)
-    DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, parallel_reload=True)
-    FeatEmbder= init_model(net=FeatEmbdmodel, init_type = args.init_type, restore=FeatEmbd_restore, parallel_reload=False)
-
-
-    print(">>> FeatExtor <<<")
-    print(FeatExtor)
-    print(">>> DepthEstor <<<")
-    print(DepthEstor)
-    print(">>> FeatEmbder <<<")
-    print(FeatEmbder)    
-    ##################### tarining models##################### 
-
-    if args.training_type=='Train':
+        print(">>> FeatExtor <<<")
+        print(FeatExtor)
+        print(">>> DepthEstor <<<")
+        print(DepthEstor)
+        print(">>> FeatEmbder <<<")
+        print(FeatEmbder)    
 
         Train(args, FeatExtor, DepthEstor, FeatEmbder,
                data_loader1_real, data_loader1_fake,
                data_loader2_real, data_loader2_fake,
             #    data_loader3_real, data_loader3_fake,
-               data_loader_target,
+            #    data_loader_target,
                summary_writer, saver, savefilename) 
 
-    elif args.training_type in ['Test']:     
+    elif args.training_type is 'Test':
+        for modelIdx in range(1, args.test_model_num+1):
+            FeatExt_restore = osp.join('results', args.tstfile, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatExtor-'+str(modelIdx)+'.pt')
+            FeatEmbd_restore = osp.join('results', args.tstfile, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatEmbder-'+str(modelIdx)+'.pt')
+            DepthEst_restore = None
 
-        Test(args, FeatExtor, FeatEmbder, data_loader_target, savefilename)
+            FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, parallel_reload=True)
+            FeatEmbder= init_model(net=FeatEmbdmodel, init_type = args.init_type, restore=FeatEmbd_restore, parallel_reload=False)
+            DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, parallel_reload=True)
+
+            Test(args, FeatExtor, FeatEmbder, data_loader_target, modelIdx)
 
     else:
         raise NotImplementedError('method type [%s] is not implemented' % args.training_type)
@@ -154,15 +149,19 @@ if __name__ == '__main__':
 
     # # # # training configs
     parser.add_argument('--training_type', type=str, default='Train')
-    parser.add_argument('--results_path', type=str, default='./results/Train_20191125')
-    parser.add_argument('--batchsize', type=int, default=6)
+    parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_no_equal')
+    # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_MSU')
+    # parser.add_argument('--results_path', type=str, default='./results/Train_20210314')
+    parser.add_argument('--batchsize', type=int, default=14)
 
     # parser.add_argument('--training_type', type=str, default='Test')
     # parser.add_argument('--results_path', type=str, default='./results/Test_20191125/')
     # parser.add_argument('--batchsize', type=int, default=1)
-    # parser.add_argument('--tstfile', type=str, default='Train_20191125')
-    # parser.add_argument('--tstdataset', type=str, default='idiapCASIAMSU1')    
-    # parser.add_argument('--snapshotnum', type=str, default='final')
+    parser.add_argument('--tstfile', type=str, default='Train_CelebA_MSU')
+    parser.add_argument('--tstdataset', type=str, default='siw-m')    
+    parser.add_argument('--snapshotnum', type=str, default='1')
+    parser.add_argument('--test_batchsize', type=int, default=50)
+    parser.add_argument('--test_model_num', type=int, default=3)
  
 
     parser.add_argument('--epochs', type=int, default=10)

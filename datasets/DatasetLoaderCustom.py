@@ -13,8 +13,8 @@ def OriImg_loader(path):
     HSVimg = Image.open(path).convert('HSV')
     # RGBimg = RGBimg.resize((380,380))
     # HSVimg = HSVimg.resize((380,380))
-    RGBimg = RGBimg.resize((260,260))
-    HSVimg = HSVimg.resize((260,260))
+    RGBimg = RGBimg.resize((256,256))
+    HSVimg = HSVimg.resize((256,256))
     return RGBimg, HSVimg
 
 def DepthImg_loader(path,imgsize=32):
@@ -33,24 +33,31 @@ class DatasetLoader(Dataset):
         if name == 'CelebA':
             imgPaths = list(paths.list_images(self.root+"CelebA_Data/trainSquareCropped"))
             for path in imgPaths:                
-                if "live" in path:
+                if "live" in path:# and getreal:
                     label = 0
-                else:
+                    depth_dir = path.replace("trainSquareCropped", "trainSquareCropped_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+
+                else:#if not getreal:
                     label = 1
-                depth_dir = path.replace("trainSquareCropped", "trainSquareCropped_depth")
-                if os.path.exists(depth_dir):
-                    imgs.append((path, depth_dir, label))
+                    depth_dir = path.replace("trainSquareCropped", "trainSquareCropped_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
         
         elif name == 'MSU':
             imgPaths = list(paths.list_images(self.root+"MSU_MFSD_similar/train"))
             for path in imgPaths:                
-                if "live" in path:
+                if "live" in path:# and getreal:
                     label = 0
-                else:
+                    depth_dir = path.replace("MSU_MFSD_similar", "MSU_MFSD_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+                else:#if not getreal:
                     label = 1
-                depth_dir = path.replace("MSU_MFSD_similar", "MSU_MFSD_similar_depth")
-                if os.path.exists(depth_dir):
-                    imgs.append((path, depth_dir, label))
+                    depth_dir = path.replace("MSU_MFSD_similar", "MSU_MFSD_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
         '''
         elif name == 'Siw-m':
             imgPaths = list(paths.list_images("Siw-m_similar_er/train"))

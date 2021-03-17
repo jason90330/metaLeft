@@ -1,0 +1,36 @@
+------------ Options -------------
+W_depth: 10
+W_metatest: 1
+arch_DepthEst: DepthEstmator
+arch_FeatEmbd: FeatEmbedder
+arch_FeatExt: FeatExtractor
+batchsize: 6
+beta1: 0.9
+beta2: 0.999
+bn_momentum: 1
+dataset1: CelebA
+dataset2: MSU
+dataset_target: Siw-m
+epochs: 10
+init_type: xavier
+log_step: 2
+lr_dep: 0.001
+lr_meta: 0.001
+manual_seed: None
+meta_step_size: 0.001
+metatrainsize: 1
+model_save_epoch: 1
+model_save_step: 500
+momentum: 0.9
+optimizer_meta: adam
+results_path: ./results/Train_CelebA_MSU
+seed: 3429
+snapshotnum: 1
+test_batchsize: 50
+test_model_num: 3
+training_type: Test
+tst_step: 100
+tstdataset: siw-m
+tstfile: Train_CelebA_MSU
+weight_decay: 5e-05
+-------------- End ----------------

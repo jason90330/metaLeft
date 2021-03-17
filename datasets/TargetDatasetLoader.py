@@ -12,8 +12,8 @@ def default_loader(path):
     HSVimg = Image.open(path).convert('HSV')
     # RGBimg = RGBimg.resize((380,380))
     # HSVimg = HSVimg.resize((380,380))
-    RGBimg = RGBimg.resize((260,260))
-    HSVimg = HSVimg.resize((260,260))
+    RGBimg = RGBimg.resize((256,256))
+    HSVimg = HSVimg.resize((256,256))
     return RGBimg, HSVimg
 
 

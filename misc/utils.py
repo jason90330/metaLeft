@@ -47,7 +47,7 @@ def weights_init_const(m):
 def weights_init_xavier(m):
     classname = m.__class__.__name__
     # print(classname)
-    if classname.find('Conv') != -1:
+    if classname.find('Conv') != -1 and "Lambda" not in classname:
         init.xavier_normal_(m.weight.data, gain=1)
     elif classname.find('Linear') != -1:
         init.xavier_normal_(m.weight.data, gain=1)
@@ -178,7 +178,6 @@ def init_model(net, restore, init_type, init= True, parallel_reload=True):
     if torch.cuda.is_available():
         cudnn.benchmark = True
         net.cuda()
-
     return net
 
 

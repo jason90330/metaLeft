@@ -20,7 +20,7 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
         data_loader1_real, data_loader1_fake,
         data_loader2_real, data_loader2_fake,
         # data_loader3_real, data_loader3_fake,
-        data_loader_target,
+        # data_loader_target,
         summary_writer, Saver, savefilename):
             
     ####################
