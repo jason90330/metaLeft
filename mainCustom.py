@@ -87,8 +87,8 @@ def main(args):
 
     elif args.training_type is 'Test':
         for modelIdx in range(1, args.test_model_num+1):
-            FeatExt_restore = osp.join('results', args.tstfile, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatExtor-'+str(modelIdx)+'.pt')
-            FeatEmbd_restore = osp.join('results', args.tstfile, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatEmbder-'+str(modelIdx)+'.pt')
+            FeatExt_restore = osp.join(args.results_path, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatExtor-'+str(modelIdx)+'.pt')
+            FeatEmbd_restore = osp.join(args.results_path, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatEmbder-'+str(modelIdx)+'.pt')
             DepthEst_restore = None
 
             FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, parallel_reload=True)
@@ -148,25 +148,27 @@ if __name__ == '__main__':
     parser.add_argument('--optimizer_meta', type=str, default='adam')
 
     # # # # training configs
-    parser.add_argument('--training_type', type=str, default='Train')
-    parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_no_equal')
+    # parser.add_argument('--training_type', type=str, default='Train')
+    parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_all_resAtt')
+    # parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_no_equal_fc1')
+    # parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_no_equal')#half resnet half ori paper
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_MSU')
     # parser.add_argument('--results_path', type=str, default='./results/Train_20210314')
-    parser.add_argument('--batchsize', type=int, default=14)
+    parser.add_argument('--batchsize', type=int, default=7)
 
-    # parser.add_argument('--training_type', type=str, default='Test')
+    parser.add_argument('--training_type', type=str, default='Test')
     # parser.add_argument('--results_path', type=str, default='./results/Test_20191125/')
     # parser.add_argument('--batchsize', type=int, default=1)
-    parser.add_argument('--tstfile', type=str, default='Train_CelebA_MSU')
+    # parser.add_argument('--tstfile', type=str, default='Train_CelebA_MSU')
     parser.add_argument('--tstdataset', type=str, default='siw-m')    
     parser.add_argument('--snapshotnum', type=str, default='1')
-    parser.add_argument('--test_batchsize', type=int, default=50)
-    parser.add_argument('--test_model_num', type=int, default=3)
+    parser.add_argument('--test_batchsize', type=int, default=100)
+    parser.add_argument('--test_model_num', type=int, default=1)
  
 
-    parser.add_argument('--epochs', type=int, default=10)
+    parser.add_argument('--epochs', type=int, default=5)
     parser.add_argument('--log_step', type=int, default=2)
-    parser.add_argument('--tst_step', type=int, default=100)
+    parser.add_argument('--tst_step', type=int, default=200)
     parser.add_argument('--model_save_step', type=int, default=500)
     parser.add_argument('--model_save_epoch', type=int, default=1)
     parser.add_argument('--manual_seed', type=int, default=None)

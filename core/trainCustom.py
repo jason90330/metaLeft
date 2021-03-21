@@ -33,7 +33,8 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
 
 
     FeatExtor = DataParallel(FeatExtor)    
-    DepthEstor = DataParallel(DepthEstor)    
+    DepthEstor = DataParallel(DepthEstor)  
+    # FeatEmbder = DataParallel(FeatEmbder)
  
 
 
@@ -160,6 +161,8 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
 
                 zero_param_grad(FeatEmbder.parameters())    
                 grads_FeatEmbder = torch.autograd.grad(Loss_cls, FeatEmbder.parameters(), create_graph=True)
+                # if isinstance(FeatEmbder,torch.nn.DataParallel):
+                #     FeatEmbder = FeatEmbder.module
                 fast_weights_FeatEmbder = FeatEmbder.cloned_state_dict()
 
                 adapted_params = OrderedDict()

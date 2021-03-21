@@ -227,7 +227,7 @@ class ResNet(nn.Module):
         return dx1_mp, dx2, dx3
     
 def LambdaResNet50():
-    return ResNet(LambdaBottleneck, [3, 4, 6, 3])
+    return ResNet(LambdaBottleneck, [3, 4, 6, 3], num_classes = 2)
 
 class FeatExtractor(nn.Module):
     def __init__(self, in_channels=6): # rgb+hsv

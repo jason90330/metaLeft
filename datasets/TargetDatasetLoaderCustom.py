@@ -12,8 +12,8 @@ from pdb import set_trace as st
 def default_loader(path):
     RGBimg = Image.open(path).convert('RGB')
     HSVimg = Image.open(path).convert('HSV')
-    RGBimg = RGBimg.resize((260,260))
-    HSVimg = HSVimg.resize((260,260))
+    RGBimg = RGBimg.resize((256,256))
+    HSVimg = HSVimg.resize((256,256))
     return RGBimg, HSVimg
 
 
