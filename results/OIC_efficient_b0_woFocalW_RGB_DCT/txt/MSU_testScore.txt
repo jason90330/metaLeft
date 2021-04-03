@@ -1,0 +1,114 @@
+============================================================
+Model 001 
+TP:328, TN:16862,  FP:98,  FN:5673
+accuracy:0.748661
+precision:0.769953
+recall:0.054658
+f_measure:0.102069
+sensitivity:0.054658
+specificity:0.994222
+error_rate:0.251339
+apcer:0.005778
+bpcer:0.945342
+acer:0.475560
+eer:0.447054
+hter:0.447054
+TPR@FPR=10E-3:0.960083
+TPR@FPR=5E-3:0.960083
+TPR@FPR=10E-4:0.960083
+
+============================================================
+Model 002 
+TP:962, TN:16844,  FP:116,  FN:5039
+accuracy:0.775489
+precision:0.892393
+recall:0.160307
+f_measure:0.271790
+sensitivity:0.160307
+specificity:0.993160
+error_rate:0.224511
+apcer:0.006840
+bpcer:0.839693
+acer:0.423267
+eer:0.373154
+hter:0.373154
+TPR@FPR=10E-3:0.953243
+TPR@FPR=5E-3:0.953243
+TPR@FPR=10E-4:0.953243
+
+============================================================
+Model 003 
+TP:13, TN:16929,  FP:31,  FN:5988
+accuracy:0.737860
+precision:0.295455
+recall:0.002166
+f_measure:0.004301
+sensitivity:0.002166
+specificity:0.998172
+error_rate:0.262140
+apcer:0.001828
+bpcer:0.997834
+acer:0.499831
+eer:0.500234
+hter:0.499572
+TPR@FPR=10E-3:0.981368
+TPR@FPR=5E-3:0.981368
+TPR@FPR=10E-4:0.981368
+
+============================================================
+Model 004 
+TP:1023, TN:16960,  FP:0,  FN:4978
+accuracy:0.783198
+precision:1.000000
+recall:0.170472
+f_measure:0.291287
+sensitivity:0.170472
+specificity:1.000000
+error_rate:0.216802
+apcer:0.000000
+bpcer:0.829528
+acer:0.414764
+eer:0.386065
+hter:0.386065
+TPR@FPR=10E-3:0.998408
+TPR@FPR=5E-3:0.998408
+TPR@FPR=10E-4:0.998408
+
+============================================================
+Model 005 
+TP:651, TN:16653,  FP:307,  FN:5350
+accuracy:0.753626
+precision:0.679541
+recall:0.108482
+f_measure:0.187096
+sensitivity:0.108482
+specificity:0.981899
+error_rate:0.246374
+apcer:0.018101
+bpcer:0.891518
+acer:0.454810
+eer:0.440562
+hter:0.440562
+TPR@FPR=10E-3:0.974233
+TPR@FPR=5E-3:0.974233
+TPR@FPR=10E-4:0.974233
+
+============================================================
+Model 006 
+TP:409, TN:16717,  FP:243,  FN:5592
+accuracy:0.745873
+precision:0.627301
+recall:0.068155
+f_measure:0.122952
+sensitivity:0.068155
+specificity:0.985672
+error_rate:0.254127
+apcer:0.014328
+bpcer:0.931845
+acer:0.473086
+eer:0.456649
+hter:0.456649
+TPR@FPR=10E-3:0.969222
+TPR@FPR=5E-3:0.969222
+TPR@FPR=10E-4:0.969222
+

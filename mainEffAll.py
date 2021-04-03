@@ -63,9 +63,9 @@ def main(args):
 
     ##################### load models##################### 
 
-    FeatExtmodel = models.create(args.arch_FeatExt)  
-    DepthEstmodel = models.create(args.arch_DepthEst)
-    FeatEmbdmodel = models.create(args.arch_FeatEmbd,momentum=args.bn_momentum)
+    FeatExtmodel = models.create(args.arch_FeatExt, args.pretrain)  
+    DepthEstmodel = models.create(args.arch_DepthEst, args.pretrain)  
+    FeatEmbdmodel = models.create(args.arch_FeatEmbd, args.pretrain,momentum=args.bn_momentum)  
 
 
     if args.training_type is 'Train':
@@ -73,9 +73,9 @@ def main(args):
         DepthEst_restore = None
         FeatEmbd_restore = None
 
-        FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, parallel_reload=True)
-        DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, parallel_reload=True)
-        FeatEmbder= init_model(net=FeatEmbdmodel, init_type = args.init_type, restore=FeatEmbd_restore, parallel_reload=False)
+        FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, pretrain = args.pretrain, parallel_reload=True)
+        DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, pretrain = False, parallel_reload=True)
+        FeatEmbder= init_model(net=FeatEmbdmodel, init_type = args.init_type, restore=FeatEmbd_restore, pretrain = args.pretrain, parallel_reload=False)
 
         print(">>> FeatExtor <<<")
         print(FeatExtor)
@@ -154,6 +154,7 @@ if __name__ == '__main__':
     parser.add_argument('--focalWithWeight', type=bool, default=False)
     
     parser.add_argument('--init_type', type=str, default='xavier')
+    parser.add_argument('--pretrain',  type=bool, default=True)
     parser.add_argument('--metatrainsize', type=int, default=2)
     # optimizer
     parser.add_argument('--lr', type=float, default=1e-3)
