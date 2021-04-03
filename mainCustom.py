@@ -22,16 +22,14 @@ def main(args):
 
     if args.training_type is 'Train':
         # savefilename = osp.join(args.dataset1+args.dataset2+args.dataset3+'1')
-        savefilename = osp.join(args.dataset1+"_"+args.dataset2)
+        savefilename = osp.join(args.dataset1)
     elif  args.training_type is 'Test':    
-        savefilename = osp.join(args.dataset1+"_"+args.dataset2+"_to_"+args.dataset_target+"_"+args.snapshotnum) 
+        savefilename = osp.join(args.tstfile, args.tstdataset+'to'+args.tstdataset+args.snapshotnum) 
 
-    args.seed = init_random_seed(args.manual_seed)
+    summary_writer = SummaryWriter(osp.join(args.results_path, 'log'))# save current iter info.
+    saver = Saver(args,savefilename)# print current iter info.
+    saver.print_config()
 
-    if args.training_type in ['Train','Test']:
-        summary_writer = SummaryWriter(osp.join(args.results_path, 'log', savefilename))
-        saver = Saver(args,savefilename)
-        saver.print_config()
 
     ##################### load seed#####################  
 
@@ -42,8 +40,8 @@ def main(args):
         data_loader1_real = get_dataset_loader(name=args.dataset1, getreal=True, batch_size=args.batchsize)
         data_loader1_fake = get_dataset_loader(name=args.dataset1, getreal=False, batch_size=args.batchsize)
 
-        data_loader2_real = get_dataset_loader(name=args.dataset2, getreal=True, batch_size=args.batchsize)
-        data_loader2_fake = get_dataset_loader(name=args.dataset2, getreal=False, batch_size=args.batchsize)
+        # data_loader2_real = get_dataset_loader(name=args.dataset2, getreal=True, batch_size=args.batchsize)
+        # data_loader2_fake = get_dataset_loader(name=args.dataset2, getreal=False, batch_size=args.batchsize)
 
         # data_loader3_real = get_dataset_loader(name=args.dataset3, getreal=True, batch_size=args.batchsize)
         # data_loader3_fake = get_dataset_loader(name=args.dataset3, getreal=False, batch_size=args.batchsize)
@@ -80,20 +78,22 @@ def main(args):
 
         Train(args, FeatExtor, DepthEstor, FeatEmbder,
                data_loader1_real, data_loader1_fake,
-               data_loader2_real, data_loader2_fake,
+            #    data_loader2_real, data_loader2_fake,
             #    data_loader3_real, data_loader3_fake,
             #    data_loader_target,
                summary_writer, saver, savefilename) 
 
     elif args.training_type is 'Test':
         for modelIdx in range(1, args.test_model_num+1):
-            FeatExt_restore = osp.join(args.results_path, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatExtor-'+str(modelIdx)+'.pt')
-            FeatEmbd_restore = osp.join(args.results_path, 'snapshots', args.dataset1+"_"+args.dataset2, 'FeatEmbder-'+str(modelIdx)+'.pt')
-            DepthEst_restore = None
+            # FeatExt_restore = osp.join(args.results_path, 'snapshots', args.dataset1, 'FeatExtor-'+str(modelIdx)+'.pt')
+            # FeatEmbd_restore = osp.join(args.results_path, 'snapshots', args.dataset1, 'FeatEmbder-'+str(modelIdx)+'.pt')
+            FeatExt_restore = osp.join(args.results_path, "model", 'FeatExtor-'+str(modelIdx)+'.pt')
+            FeatEmbd_restore = osp.join(args.results_path, "model", 'FeatEmbder-'+str(modelIdx)+'.pt')
+            # DepthEst_restore = None
 
             FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, parallel_reload=True)
             FeatEmbder= init_model(net=FeatEmbdmodel, init_type = args.init_type, restore=FeatEmbd_restore, parallel_reload=False)
-            DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, parallel_reload=True)
+            # DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, parallel_reload=True)
 
             Test(args, FeatExtor, FeatEmbder, data_loader_target, modelIdx)
 
@@ -108,9 +108,9 @@ if __name__ == '__main__':
     # datasets 
         # OMI
     parser.add_argument('--dataset1', type=str, default='CelebA')
-    parser.add_argument('--dataset2', type=str, default='MSU')
+    # parser.add_argument('--dataset2', type=str, default='MSU')
     # parser.add_argument('--dataset3', type=str, default='Siw-m')
-    parser.add_argument('--dataset_target', type=str, default='Siw-m')
+    # parser.add_argument('--dataset_target', type=str, default='Siw-m')
 
         # OIC
     # parser.add_argument('--dataset1', type=str, default='OULU')
@@ -148,25 +148,26 @@ if __name__ == '__main__':
     parser.add_argument('--optimizer_meta', type=str, default='adam')
 
     # # # # training configs
-    # parser.add_argument('--training_type', type=str, default='Train')
-    parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_all_resAtt')
+    parser.add_argument('--training_type', type=str, default='Train')
+    parser.add_argument('--results_path', type=str, default='./results/Train_RFM')
+    # parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_all_resAtt')
     # parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_no_equal_fc1')
     # parser.add_argument('--results_path', type=str, default='./results/Train_Lambda_CelebA_MSU_no_equal')#half resnet half ori paper
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_MSU')
     # parser.add_argument('--results_path', type=str, default='./results/Train_20210314')
     parser.add_argument('--batchsize', type=int, default=7)
 
-    parser.add_argument('--training_type', type=str, default='Test')
+    # parser.add_argument('--training_type', type=str, default='Test')
     # parser.add_argument('--results_path', type=str, default='./results/Test_20191125/')
     # parser.add_argument('--batchsize', type=int, default=1)
     # parser.add_argument('--tstfile', type=str, default='Train_CelebA_MSU')
-    parser.add_argument('--tstdataset', type=str, default='siw-m')    
+    parser.add_argument('--tstdataset', type=str, default='CelebA')    
     parser.add_argument('--snapshotnum', type=str, default='1')
     parser.add_argument('--test_batchsize', type=int, default=100)
     parser.add_argument('--test_model_num', type=int, default=1)
  
 
-    parser.add_argument('--epochs', type=int, default=5)
+    parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--log_step', type=int, default=2)
     parser.add_argument('--tst_step', type=int, default=200)
     parser.add_argument('--model_save_step', type=int, default=500)

@@ -1,0 +1,201 @@
+import os
+import torch
+import random
+import math
+from torchvision import transforms, utils
+from torch.utils.data import Dataset, DataLoader
+# import matplotlib.pyplot as plt
+from imutils import paths
+from PIL import Image
+from misc import utils
+from pdb import set_trace as st
+
+def OriImg_loader(path):
+    RGBimg = Image.open(path).convert('RGB')
+    HSVimg = Image.open(path).convert('HSV')
+    # RGBimg = RGBimg.resize((380,380))
+    # HSVimg = HSVimg.resize((380,380))
+    RGBimg = RGBimg.resize((256,256))
+    HSVimg = HSVimg.resize((256,256))
+    return RGBimg, HSVimg
+
+def DepthImg_loader(path,imgsize=128):
+    img = Image.open(path)
+    re_img = img.resize((imgsize, imgsize), resample=Image.BICUBIC)
+    return re_img
+
+
+class DatasetLoader(Dataset):
+    def __init__(self, name, getreal, transform=None, oriimg_loader=OriImg_loader, depthimg_loader=DepthImg_loader, root='../../'):
+
+        self.name = name
+        self.root = os.path.expanduser(root)
+        imgPaths = []
+        imgs = []
+        num_live = 0
+        num_spoof = 0
+        if name == 'CelebA':
+            imgPaths = list(paths.list_images(self.root+"CelebA_Data/trainSquareCropped"))         
+            for path in imgPaths:                
+                if "live" in path and getreal:
+                    label = 0
+                    depth_dir = path.replace("trainSquareCropped", "trainSquareCropped_depth")
+                    if os.path.exists(depth_dir):
+                        num_live += 1
+                        imgs.append((path, depth_dir, label))
+                elif ("live" not in path) and (not getreal):
+                    label = 1
+                    depth_dir = path.replace("trainSquareCropped", "trainSquareCropped_depth")
+                    if os.path.exists(depth_dir):
+                        num_spoof += 1
+                        imgs.append((path, depth_dir, label))
+        
+        elif name == 'MSU':
+            imgPaths = list(paths.list_images(self.root+"MSU_MFSD_similar/train"))            
+            for path in imgPaths:                
+                if "live" in path and getreal:
+                    label = 0
+                    depth_dir = path.replace("MSU_MFSD_similar", "MSU_MFSD_similar_depth")
+                    if os.path.exists(depth_dir):
+                        num_live += 1
+                        imgs.append((path, depth_dir, label))
+                elif ("live" not in path) and (not getreal):
+                    label = 1
+                    depth_dir = path.replace("MSU_MFSD_similar", "MSU_MFSD_similar_depth")
+                    if os.path.exists(depth_dir):
+                        num_spoof += 1
+                        imgs.append((path, depth_dir, label))                    
+        
+        elif name == 'OULU':
+            imgPaths = list(paths.list_images(self.root+"Oulu_similar/Train_files"))
+            for path in imgPaths:    
+                pathTok = path.split("/")[-2][-1:]            
+                if pathTok == "1" and getreal:
+                    label = 0
+                    depth_dir = path.replace("Oulu_similar", "Oulu_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+                elif (pathTok != "1") and (not getreal):
+                    label = 1
+                    depth_dir = path.replace("Oulu_similar", "Oulu_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+
+        elif name == 'idiap':
+            imgPaths = list(paths.list_images(self.root+"Idiap_similar/train"))
+            for path in imgPaths:    
+                if "real" in path and getreal:
+                    label = 0
+                    depth_dir = path.replace("Idiap_similar", "Idiap_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+                elif ("real" not in path) and (not getreal):
+                    label = 1
+                    depth_dir = path.replace("Idiap_similar", "Idiap_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+        
+        elif name == 'CASIA':
+            imgPaths = list(paths.list_images(self.root+"CASIA-MFSD_similar/train_release"))
+            for path in imgPaths:    
+                pathTok = path.split('/')[-2]
+                if (pathTok == "1" or pathTok == "2" or pathTok == "HR_1") and getreal:
+                    label = 0
+                    depth_dir = path.replace("CASIA-MFSD_similar", "CASIA-MFSD_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+                elif (pathTok != "1" and pathTok != "2" and pathTok != "HR_1") and not getreal:
+                    label = 1
+                    depth_dir = path.replace("CASIA-MFSD_similar", "CASIA-MFSD_similar_depth")
+                    if os.path.exists(depth_dir):
+                        imgs.append((path, depth_dir, label))
+        '''
+        elif name == 'Siw-m':
+            imgPaths = list(paths.list_images("Siw-m_similar_er/train"))
+            for path in imgPaths:                
+                if "Live" in path:
+                    label = 0
+                else:
+                    label = 1
+                depth_dir = path.replace("Siw-m_similar_er", "Siw-m_similar_er_depth")
+                if os.path.exists(depth_dir):
+                    imgs.append((path, depth_dir, label))
+        '''
+        '''
+        diff = num_live-num_spoof
+        if diff<0:
+            toAppend = "live"
+        else:
+            toAppend = "fake"        
+        diff = abs(diff)
+        idx = 0
+        random.Random(4).shuffle(imgPaths)
+        while diff>0:            
+            path = imgPaths[idx]
+            if toAppend == "live" and "live" in path:
+                depth_dir = path.replace("trainSquareCropped", "trainSquareCropped_depth")
+                label = 0
+                if os.path.exists(depth_dir):
+                    imgs.append((path, depth_dir, label))
+                    diff -=1
+
+            elif toAppend == "fake" and "live" not in path:
+                depth_dir = path.replace("trainSquareCropped", "trainSquareCropped_depth")
+                label = 1
+                if os.path.exists(depth_dir):
+                    imgs.append((path, depth_dir, label))
+                    diff -=1
+            idx+=1
+            if idx == len(imgPaths):
+                idx=0
+        '''    
+        self.imgs = imgs
+        self.transform = transform
+        self.oriimg_loader = oriimg_loader
+        self.depthimg_loader = depthimg_loader
+        # self.depth_loader = depth_loader
+
+
+    def __getitem__(self, index):
+        ori_img_dir, depth_img_dir, label = self.imgs[index]
+        # ori_img_dir_all = os.path.join(ori_img_dir)
+        # depth_img_dir_all = os.path.join(depth_img_dir)
+
+        ori_rgbimg, ori_hsvimg = self.oriimg_loader(ori_img_dir)
+        depth_img = self.depthimg_loader(depth_img_dir)
+
+        if self.transform is not None:
+            ori_rgbimg = self.transform(ori_rgbimg)
+            ori_hsvimg = self.transform(ori_hsvimg)
+            depth_img = self.transform(depth_img)
+
+            ori_catimg = torch.cat([ori_rgbimg,ori_hsvimg],0)
+        return ori_catimg, depth_img, label
+
+    def __len__(self):
+        return len(self.imgs)
+
+
+def get_dataset_loader(name, getreal, batch_size):
+
+    # pre_process = transforms.Compose([transforms.ToTensor(),
+    #                                   transforms.Normalize(
+    #                                   mean=[0.485, 0.456, 0.406],
+    #                                   std=[0.229, 0.224, 0.225])])      
+
+    pre_process = transforms.Compose([transforms.ToTensor()])  
+  
+
+    # dataset and data loader
+    dataset = DatasetLoader(name=name,
+                        getreal=getreal,
+                        transform=pre_process
+                        )
+
+    data_loader = torch.utils.data.DataLoader(
+        dataset=dataset,
+        batch_size=batch_size,
+        shuffle=True,
+        drop_last=True)
+
+    return data_loader

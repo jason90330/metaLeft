@@ -47,7 +47,7 @@ def weights_init_const(m):
 def weights_init_xavier(m):
     classname = m.__class__.__name__
     # print(classname)
-    if classname.find('Conv') != -1 and "Lambda" not in classname:
+    if classname.find('Conv') != -1 and "Lambda" not in classname and "MBConvBlock" not in classname:
         init.xavier_normal_(m.weight.data, gain=1)
     elif classname.find('Linear') != -1:
         init.xavier_normal_(m.weight.data, gain=1)
@@ -164,7 +164,7 @@ def init_model(net, restore, init_type, init= True, parallel_reload=True):
         from collections import OrderedDict
         new_state_dict = OrderedDict()
         for k, v in state_dict.items():
-            if parallel_reload:
+            if parallel_reload and "module."in k:
                 name = k[7:] # remove `module.`
             else:
                 name = k

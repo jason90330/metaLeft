@@ -52,6 +52,24 @@ class DatasetLoader(Dataset):
                     #     imgs.append((img_path, depth_dir, label))
                     if exist:
                         imgs.append((img_path, label))
+
+        elif name == 'CelebA':
+            imgPaths = list(paths.list_images(self.root+"CelebA_Data/testSquareCropped"))
+            for path in imgPaths:
+                if "live" in path:# and getreal:
+                    label = 0
+                else:#if not getreal:
+                    label = 1
+                imgs.append((path, label))
+        
+        elif name == 'MSU':
+            imgPaths = list(paths.list_images(self.root+"MSU_MFSD_similar/test"))
+            for path in imgPaths:
+                if "live" in path:# and getreal:
+                    label = 0
+                else:#if not getreal:
+                    label = 1
+                imgs.append((path, label))
         self.imgs = imgs
         self.transform = transform
         self.loader = loader

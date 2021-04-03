@@ -18,7 +18,7 @@ from pdb import set_trace as st
 
 def Train(args, FeatExtor, DepthEstor, FeatEmbder,
         data_loader1_real, data_loader1_fake,
-        data_loader2_real, data_loader2_fake,
+        # data_loader2_real, data_loader2_fake,
         # data_loader3_real, data_loader3_fake,
         # data_loader_target,
         summary_writer, Saver, savefilename):
@@ -57,8 +57,7 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
     # iternum = max(len(data_loader1_real),len(data_loader1_fake),
     #               len(data_loader2_real),len(data_loader2_fake), 
     #               len(data_loader3_real),len(data_loader3_fake))       
-    iternum = max(len(data_loader1_real),len(data_loader1_fake),
-                len(data_loader2_real),len(data_loader2_fake))        
+    iternum = int(max(len(data_loader1_real),len(data_loader1_fake))/3)    
 
     print('iternum={}'.format(iternum))
 
@@ -72,8 +71,8 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
         data1_real = get_inf_iterator(data_loader1_real)
         data1_fake = get_inf_iterator(data_loader1_fake)
 
-        data2_real = get_inf_iterator(data_loader2_real)
-        data2_fake = get_inf_iterator(data_loader2_fake)
+        # data2_real = get_inf_iterator(data_loader2_real)
+        # data2_fake = get_inf_iterator(data_loader2_fake)
 
         # data3_real = get_inf_iterator(data_loader3_real)
         # data3_fake = get_inf_iterator(data_loader3_fake)
@@ -86,8 +85,8 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
             cat_img1_real, depth_img1_real, lab1_real = next(data1_real)
             cat_img1_fake, depth_img1_fake, lab1_fake = next(data1_fake)
 
-            cat_img2_real, depth_img2_real, lab2_real = next(data2_real)
-            cat_img2_fake, depth_img2_fake, lab2_fake = next(data2_fake)
+            # cat_img2_real, depth_img2_real, lab2_real = next(data2_real)
+            # cat_img2_fake, depth_img2_fake, lab2_fake = next(data2_fake)
 
             # cat_img3_real, depth_img3_real, lab3_real = next(data3_real)
             # cat_img3_fake, depth_img3_fake, lab3_fake = next(data3_fake)
@@ -114,12 +113,9 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
             label = torch.cat([lab1,lab2],0)            
 
            #============ doamin list augmentation ============# 
-            # catimglist = [catimg1,catimg2,catimg3]
-            # lablist = [lab1,lab2,lab3]
-            # deplist = [depth_img1,depth_img2,depth_img3]
-            catimglist = [catimg1,catimg2]
-            lablist = [lab1,lab2]
-            deplist = [depth_img1,depth_img2]
+            catimglist = [catimg1,catimg2,catimg3]
+            lablist = [lab1,lab2,lab3]
+            deplist = [depth_img1,depth_img2,depth_img3]
 
             domain_list = list(range(len(catimglist)))
             random.shuffle(domain_list) 
@@ -249,6 +245,7 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
             #############################
             # 2.4 save model parameters #
             #############################
+            '''
             if ((step + 1) % args.model_save_step == 0):
                 model_save_path = os.path.join(args.results_path, 'snapshots', savefilename)     
                 mkdir(model_save_path) 
@@ -259,6 +256,7 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
                     "FeatEmbder-{}-{}.pt".format(epoch+1, step+1)))
                 torch.save(DepthEstor.state_dict(), os.path.join(model_save_path,
                     "DepthEstor-{}-{}.pt".format(epoch+1, step+1)))
+            '''
 
 
         if ((epoch + 1) % args.model_save_epoch == 0):

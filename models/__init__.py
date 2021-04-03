@@ -3,7 +3,8 @@ from __future__ import absolute_import
 # from .DGFANet import *
 # from .DGFANetCustom import *
 # from .DGFANetLambda import *
-from .DGFANetLambda_v2 import *
+# from .DGFANetLambda_v2 import *
+from .EfficientMetaNet import *
 
 __factory = {
     'FeatExtractor': FeatExtractor,
@@ -47,6 +48,25 @@ def create(name, *args, **kwargs):
         If positive, will append a Linear layer at the end as the classifier
         with this number of output units. Default: 0
     """
-    if name not in __factory:
+    eff_name = 'efficientnet-b0'
+    if name == "Eff_FeatExtractor":
+        # return FeatExtractor.from_name(eff_name,in_channels=6)
+        # return FeatExtractor.from_pretrained(eff_name,in_channels=6)#rgb mode
+        return FeatExtractor.from_pretrained(eff_name,in_channels=3)#dct mode
+
+    elif name == "Eff_FeatEmbedder":
+        # return FeatEmbedder.from_name(eff_name)#arcface, multi class
+        return FeatEmbedder.from_pretrained(eff_name)#,num_classes=1)
+        # return FeatEmbedder.from_name(eff_name,num_classes=1)
+
+    elif name == "Eff_DepthEstmator":
+        if eff_name == 'efficientnet-b4':
+            return DepthEstmator(48)
+        elif eff_name == 'efficientnet-b0':
+            return DepthEstmator(32)
+
+    elif name not in __factory:
         raise KeyError("Unknown model:", name)
-    return __factory[name](*args, **kwargs)
+
+    else:
+        return __factory[name](*args, **kwargs)

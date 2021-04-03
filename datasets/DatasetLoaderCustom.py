@@ -17,7 +17,7 @@ def OriImg_loader(path):
     HSVimg = HSVimg.resize((256,256))
     return RGBimg, HSVimg
 
-def DepthImg_loader(path,imgsize=32):
+def DepthImg_loader(path,imgsize=128):
     img = Image.open(path)
     re_img = img.resize((imgsize, imgsize), resample=Image.BICUBIC)
     return re_img
@@ -136,7 +136,7 @@ def get_dataset_loader(name, getreal, batch_size):
     #                                   mean=[0.485, 0.456, 0.406],
     #                                   std=[0.229, 0.224, 0.225])])      
 
-    pre_process = transforms.Compose([transforms.ToTensor()])  
+    pre_process = transforms.Compose([transforms.ToTensor()])
   
 
     # dataset and data loader

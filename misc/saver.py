@@ -28,8 +28,8 @@ class Saver():
             utils.mkdirs(self.imgsave_dir)
 
 
-    def print_current_errors(self, epoch, i, errors):
-        message = '(epoch: %d, iters: %d) ' % (epoch, i)
+    def print_current_errors(self, epoch, i, totalIter, errors):
+        message = '(epoch: %d, iters: %d / %d) ' % (epoch, i, totalIter)
         for k, v in errors.items():
             message += '%s: %.5f ' % (k, v)
 
