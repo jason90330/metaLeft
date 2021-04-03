@@ -149,10 +149,10 @@ def init_random_seed(manual_seed):
 
 
 
-def init_model(net, restore, init_type, init= True, parallel_reload=True):
+def init_model(net, restore, init_type, init= False, pretrain = True, parallel_reload=True):
     """Init models with cuda and weights."""
     # init weights of model
-    if init:
+    if init and not pretrain:
         init_weights(net, init_type)
     
     # restore model weights

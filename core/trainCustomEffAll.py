@@ -33,10 +33,10 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
     DepthEstor.train()
     FeatEmbder.train()
     
-    head_dict = {'ArcFace': ArcFace(in_features = 1000, out_features = 2, device_id = [0,1]),
-                'CosFace': CosFace(in_features = 1000, out_features = 2, device_id = [0,1]),
-                'SphereFace': SphereFace(in_features = 1000, out_features = 2, device_id = [0,1]),
-                'Am_softmax': Am_softmax(in_features = 1000, out_features = 2, device_id = [0,1])}
+    head_dict = {'ArcFace': ArcFace(in_features = 1000, out_features = 2, device_id = [0]),
+                'CosFace': CosFace(in_features = 1000, out_features = 2, device_id = [0]),
+                'SphereFace': SphereFace(in_features = 1000, out_features = 2, device_id = [0]),
+                'Am_softmax': Am_softmax(in_features = 1000, out_features = 2, device_id = [0])}
     Head = head_dict[args.head_name]
     Head.train()
     
@@ -49,7 +49,7 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
 
 
     # setup criterion and optimizer
-    criterionCls = FocalLoss(outNum = 2)
+    criterionCls = FocalLoss(outNum = 2, withWeight = args.focalWithWeight)
     # criterionCls = nn.BCEWithLogitsLoss()
     criterionDepth = torch.nn.MSELoss()
 

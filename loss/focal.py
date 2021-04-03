@@ -5,7 +5,7 @@ import numpy as np
 # Support: ['FocalLoss']
 
 class FocalLoss(nn.Module):
-    def __init__(self, gamma = 2, eps = 1e-7, outNum = 6, withWeight = True):
+    def __init__(self, gamma = 2, eps = 1e-7, outNum = 6, withWeight = False):
         super(FocalLoss, self).__init__()
         self.gamma = gamma
         self.eps = eps   
