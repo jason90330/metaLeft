@@ -34,7 +34,7 @@ def Train(args, FeatExtor, DepthEstor, FeatEmbder,
 
     FeatExtor = DataParallel(FeatExtor)    
     DepthEstor = DataParallel(DepthEstor)  
-    # FeatEmbder = DataParallel(FeatEmbder)
+    FeatEmbder = DataParallel(FeatEmbder)
  
 
 

@@ -13,9 +13,9 @@ from core.trainCustomEffAll import Train
 from core.testCustom import Test
 # from core.testArcface import Test
 # from core import Train, Test
-# from datasets.DatasetLoaderCustom import get_dataset_loader
+from datasets.DatasetLoaderCustom import get_dataset_loader
 # from datasets.DatasetLoaderBalance import get_dataset_loader
-from datasets.DatasetLoaderRGB_DCT import get_dataset_loader
+# from datasets.DatasetLoaderRGB_DCT import get_dataset_loader
 # from datasets.DatasetLoaderDCT import get_dataset_loader
 from datasets.TargetDatasetLoaderCustom import get_tgtdataset_loader
 # from datasets.DatasetLoader import get_dataset_loader
@@ -124,16 +124,16 @@ if __name__ == '__main__':
     # parser.add_argument('--dataset_target', type=str, default='CelebA')
 
     # OIC
-    parser.add_argument('--dataset1', type=str, default='OULU')
-    parser.add_argument('--dataset2', type=str, default='idiap')
-    parser.add_argument('--dataset3', type=str, default='CASIA')
-    parser.add_argument('--dataset_target', type=str, default='MSU')
+    # parser.add_argument('--dataset1', type=str, default='OULU')
+    # parser.add_argument('--dataset2', type=str, default='idiap')
+    # parser.add_argument('--dataset3', type=str, default='CASIA')
+    # parser.add_argument('--dataset_target', type=str, default='MSU')
     
     #ICM    
-    # parser.add_argument('--dataset1', type=str, default='idiap')
-    # parser.add_argument('--dataset2', type=str, default='CASIA')
-    # parser.add_argument('--dataset3', type=str, default='MSU')
-    # parser.add_argument('--dataset_target', type=str, default='OULU')
+    parser.add_argument('--dataset1', type=str, default='idiap')
+    parser.add_argument('--dataset2', type=str, default='CASIA')
+    parser.add_argument('--dataset3', type=str, default='MSU')
+    parser.add_argument('--dataset_target', type=str, default='OULU')
 
     #OCM
     # parser.add_argument('--dataset1', type=str, default='OULU')
@@ -154,7 +154,7 @@ if __name__ == '__main__':
     parser.add_argument('--focalWithWeight', type=bool, default=False)
     
     parser.add_argument('--init_type', type=str, default='xavier')
-    parser.add_argument('--pretrain',  type=bool, default=True)
+    parser.add_argument('--pretrain',  type=bool, default=False)
     parser.add_argument('--metatrainsize', type=int, default=2)
     # optimizer
     parser.add_argument('--lr', type=float, default=1e-3)
@@ -181,7 +181,8 @@ if __name__ == '__main__':
     # parser.add_argument('--results_path', type=str, default='./results/OULU_efficient_b0_dct')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_dct')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_equal')#worse than not equal
-    parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_RGB_DCT')
+    # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_RGB_DCT')#need to test
+    parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_focal')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_lambda')

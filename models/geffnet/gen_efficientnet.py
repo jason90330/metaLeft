@@ -41,7 +41,7 @@ __all__ = ['GenEfficientNet', 'mnasnet_050', 'mnasnet_075', 'mnasnet_100', 'mnas
            'efficientnet_b4', 'efficientnet_b5', 'efficientnet_b6', 'efficientnet_b7', 'efficientnet_b8',
            'efficientnet_l2', 'efficientnet_es', 'efficientnet_em', 'efficientnet_el',
            'efficientnet_cc_b0_4e', 'efficientnet_cc_b0_8e', 'efficientnet_cc_b1_8e',
-           'efficientnet_lite0_extr', 'efficientnet_lite0_embd', 'efficientnet_lite0', 'efficientnet_lite1', 'efficientnet_lite2', 'efficientnet_lite3', 'efficientnet_lite4',
+           'efficientnet_lite0_extr', 'efficientnet_lite0_embd', 'efficientnet_lite0', 'efficientnet_lite1', 'efficientnet_lite2', 'efficientnet_lite3','efficientnet_lite4_extr', 'efficientnet_lite4_embd', 'efficientnet_lite4',
            'tf_efficientnet_b0', 'tf_efficientnet_b1', 'tf_efficientnet_b2', 'tf_efficientnet_b3',
            'tf_efficientnet_b4', 'tf_efficientnet_b5', 'tf_efficientnet_b6', 'tf_efficientnet_b7', 'tf_efficientnet_b8',
            'tf_efficientnet_b0_ap', 'tf_efficientnet_b1_ap', 'tf_efficientnet_b2_ap', 'tf_efficientnet_b3_ap',
@@ -433,9 +433,9 @@ class GenEfficientNet(nn.Module):
 
 def _create_model(model_kwargs, variant, pretrained=False):
     as_sequential = model_kwargs.pop('as_sequential', False)
-    if variant == "efficientnet_lite0_extr":
+    if variant == "efficientnet_lite0_extr" or variant == "efficientnet_lite4_extr":
         model = GenEfficientNet_FeatExtractor(**model_kwargs)
-    elif variant == "efficientnet_lite0_embd":
+    elif variant == "efficientnet_lite0_embd" or variant == "efficientnet_lite4_embd":
         model = GenEfficientNet_FeatEmbedder(**model_kwargs)
     else:
         model = GenEfficientNet(**model_kwargs)
@@ -1112,6 +1112,7 @@ def efficientnet_lite0_embd(pretrained=False, **kwargs):
         'efficientnet_lite0_embd', channel_multiplier=1.0, depth_multiplier=1.0, pretrained=pretrained, **kwargs)
     return model    
 
+
 def efficientnet_lite1(pretrained=False, **kwargs):
     """ EfficientNet-Lite1 """
     model = _gen_efficientnet_lite(
@@ -1138,6 +1139,20 @@ def efficientnet_lite4(pretrained=False, **kwargs):
     model = _gen_efficientnet_lite(
         'efficientnet_lite4', channel_multiplier=1.4, depth_multiplier=1.8, pretrained=pretrained, **kwargs)
     return model
+
+
+def efficientnet_lite4_extr(pretrained=False, **kwargs):
+    """ efficientnet_lite4_extr """
+    model = _gen_efficientnet_lite(
+        'efficientnet_lite4_extr', channel_multiplier=1.4, depth_multiplier=1.8, pretrained=pretrained, **kwargs)
+    return model
+
+
+def efficientnet_lite4_embd(pretrained=False, **kwargs):
+    """ efficientnet_lite4_embd """
+    model = _gen_efficientnet_lite(
+        'efficientnet_lite4_embd', channel_multiplier=1.4, depth_multiplier=1.8, pretrained=pretrained, **kwargs)
+    return model    
 
 
 def tf_efficientnet_b0(pretrained=False, **kwargs):

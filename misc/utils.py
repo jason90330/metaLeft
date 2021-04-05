@@ -149,11 +149,7 @@ def init_random_seed(manual_seed):
 
 
 
-<<<<<<< Updated upstream
-def init_model(net, restore, init_type, init= False, pretrain = True, parallel_reload=True):
-=======
 def init_model(net, restore, init_type, init= True, pretrain=True, parallel_reload=True):
->>>>>>> Stashed changes
     """Init models with cuda and weights."""
     # init weights of model
     if init and not pretrain:

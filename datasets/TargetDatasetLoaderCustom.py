@@ -70,6 +70,35 @@ class DatasetLoader(Dataset):
                 else:#if not getreal:
                     label = 1
                 imgs.append((path, label))
+        
+        elif name == 'OULU':
+            imgPaths = list(paths.list_images(self.root+"Oulu_similar/Test_files"))
+            for path in imgPaths:    
+                pathTok = path.split("/")[-2][-1:]            
+                if pathTok == "1":# and getreal:
+                    label = 0
+                else:#if not getreal:
+                    label = 1
+                imgs.append((path, label))
+
+        elif name == 'idiap':
+            imgPaths = list(paths.list_images(self.root+"Idiap_similar/test"))
+            for path in imgPaths:    
+                if "real" in path:
+                    label = 0
+                else:#if not getreal:
+                    label = 1
+                imgs.append((path, label))
+        
+        elif name == 'CASIA':
+            imgPaths = list(paths.list_images(self.root+"CASIA-MFSD_similar/test_release"))
+            for path in imgPaths:    
+                pathTok = path.split('/')[-2]
+                if pathTok == "1" or pathTok == "2" or pathTok == "HR_1":
+                    label = 0
+                else:#if not getreal:
+                    label = 1
+                imgs.append((path, label))
         self.imgs = imgs
         self.transform = transform
         self.loader = loader

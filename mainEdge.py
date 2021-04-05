@@ -63,8 +63,10 @@ def main(args):
 
     ##################### load models##################### 
     # lite_extr = models.create("Eff_lite")
-    FeatExtmodel = models.create("Eff_lite_FeatExtractor", pretrain=args.pretrain,in_chans=6)
-    FeatEmbdmodel = models.create("Eff_lite_FeatEmbedder", pretrain=args.pretrain)
+    # FeatExtmodel = models.create("Eff_lite_FeatExtractor", pretrain=args.pretrain,in_chans=6)
+    # FeatEmbdmodel = models.create("Eff_lite_FeatEmbedder", pretrain=args.pretrain)
+    FeatExtmodel = models.create("Eff_b4_lite_FeatExtractor", pretrain=args.pretrain,in_chans=6)
+    FeatEmbdmodel = models.create("Eff_b4_lite_FeatEmbedder", pretrain=args.pretrain)
     DepthEstmodel = models.create(args.arch_DepthEst, pretrain=args.pretrain)
     # FeatExtmodel = models.create(args.arch_FeatExt)  
     # FeatEmbdmodel = models.create(args.arch_FeatEmbd,momentum=args.bn_momentum)
@@ -184,11 +186,12 @@ if __name__ == '__main__':
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_dct')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_equal')#worse than not equal
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_RGB_DCT')
-    parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_lite')
+    # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_lite')
+    parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b4_woFocalW_lite')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_focal')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_lambda')
-    parser.add_argument('--batchsize', type=int, default=13)
+    parser.add_argument('--batchsize', type=int, default=7)
 
     # parser.add_argument('--results_path', type=str, default='./results/Test_20191125/')
     # parser.add_argument('--batchsize', type=int, default=1)

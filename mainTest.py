@@ -16,8 +16,8 @@ from core.testArcface import Test
 # from datasets.DatasetLoaderBalance import get_dataset_loader
 from datasets.DatasetLoaderDCT import get_dataset_loader
 # from datasets.TargetDatasetLoaderDCT import get_tgtdataset_loader
-from datasets.TargetDatasetLoaderRGB_DCT import get_tgtdataset_loader
-# from datasets.TargetDatasetLoaderCustom import get_tgtdataset_loader
+# from datasets.TargetDatasetLoaderRGB_DCT import get_tgtdataset_loader
+from datasets.TargetDatasetLoaderCustom import get_tgtdataset_loader
 # from datasets.DatasetLoader import get_dataset_loader
 # from datasets.TargetDatasetLoader import get_tgtdataset_loader
 from misc.utils import init_model, init_random_seed, mkdirs
@@ -25,7 +25,7 @@ from misc.saver import Saver
 import models
 import random
 from pdb import set_trace as st
-os.environ['CUDA_VISIBLE_DEVICES'] = "0,1"
+os.environ['CUDA_VISIBLE_DEVICES'] = "1"
 
 def main(args):
 
@@ -175,7 +175,8 @@ if __name__ == '__main__':
     # parser.add_argument('--results_path', type=str, default='./results/CelebA_efficient_b0_dct')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_equal')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_dct')
-    parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_RGB_DCT')
+    # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_RGB_DCT')
+    parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_focal')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_lambda')
@@ -187,11 +188,12 @@ if __name__ == '__main__':
     parser.add_argument('--tstfile', type=str, default='Train_CelebA_ori')
     # parser.add_argument('--tstdataset', type=str, default='Siw-m')
     # parser.add_argument('--tstdataset', type=str, default='CelebA')
-    parser.add_argument('--tstdataset', type=str, default='MSU')
+    # parser.add_argument('--tstdataset', type=str, default='MSU')
+    parser.add_argument('--tstdataset', type=str, default='OULU')
     parser.add_argument('--tst_txt_name', type=str, default='testScore.txt')
     parser.add_argument('--snapshotnum', type=str, default='1')
-    parser.add_argument('--test_batchsize', type=int, default=100)
-    parser.add_argument('--test_model_num', type=int, default=6)
+    parser.add_argument('--test_batchsize', type=int, default=50)
+    parser.add_argument('--test_model_num', type=int, default=8)
 
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--log_step', type=int, default=2)

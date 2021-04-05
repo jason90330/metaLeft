@@ -4,7 +4,7 @@ from torchvision import transforms, utils
 from torch.utils.data import Dataset, DataLoader
 # import matplotlib.pyplot as plt
 from imutils import paths
-from PIL import Image
+from PIL import Image, ImageOps
 from misc import utils
 from pdb import set_trace as st
 
@@ -17,14 +17,30 @@ def OriImg_loader(path):
     HSVimg = HSVimg.resize((256,256))
     return RGBimg, HSVimg
 
+def OriImg_b4_loader(path):
+    RGBimg = Image.open(path).convert('RGB')
+    HSVimg = Image.open(path).convert('HSV')
+    # RGBimg = RGBimg.resize((380,380))
+    # HSVimg = HSVimg.resize((380,380))
+    RGBimg = RGBimg.resize((300,300))
+    HSVimg = HSVimg.resize((300,300))
+    return RGBimg, HSVimg
+
 def DepthImg_loader(path,imgsize=128):
     img = Image.open(path)
     re_img = img.resize((imgsize, imgsize), resample=Image.BICUBIC)
+    re_img = ImageOps.grayscale(re_img)
     return re_img
+
+def DepthImg_b4_loader(path,imgsize=150):
+    img = Image.open(path)
+    re_img = img.resize((imgsize, imgsize), resample=Image.BICUBIC)
+    re_img = ImageOps.grayscale(re_img)
+    return re_img    
 
 
 class DatasetLoader(Dataset):
-    def __init__(self, name, getreal, transform=None, oriimg_loader=OriImg_loader, depthimg_loader=DepthImg_loader, root='../'):
+    def __init__(self, name, getreal, transform=None, oriimg_loader=OriImg_loader, depthimg_loader=DepthImg_loader, root='../../'):
 
         self.name = name
         self.root = os.path.expanduser(root)

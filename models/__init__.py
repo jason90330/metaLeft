@@ -51,8 +51,8 @@ def create(name, pretrain = True, *args, **kwargs):
     eff_name = 'efficientnet-b0'
     if name == "Eff_FeatExtractor":
         if pretrain:
-            return FeatExtractor.from_pretrained(eff_name,in_channels=3)#dct mode
-            # return FeatExtractor.from_pretrained(eff_name,in_channels=6)#rgb mode
+            # return FeatExtractor.from_pretrained(eff_name,in_channels=3)#dct mode
+            return FeatExtractor.from_pretrained(eff_name,in_channels=6)#rgb mode
         else:
             return FeatExtractor.from_name(eff_name,in_channels=6)
 
@@ -88,6 +88,20 @@ def create(name, pretrain = True, *args, **kwargs):
             model = geffnet.efficientnet_lite0_embd(pretrained=True)
         else:
             model = geffnet.efficientnet_lite0_embd(pretrained=False)
+        return model
+
+    elif name == "Eff_b4_lite_FeatExtractor":
+        if pretrain:
+            model = geffnet.efficientnet_lite4_extr(pretrained=False)
+        else:
+            model = geffnet.efficientnet_lite4_extr(pretrained=False)
+        return model
+
+    elif name == "Eff_b4_lite_FeatEmbedder":
+        if pretrain:
+            model = geffnet.efficientnet_lite4_embd(pretrained=False)
+        else:
+            model = geffnet.efficientnet_lite4_embd(pretrained=False)
         return model
 
     elif name not in __factory:
