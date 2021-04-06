@@ -1,0 +1,3 @@
+================ Training Loss (Tue Apr  6 00:32:25 2021) ================
+(epoch: 1, iters: 2 / 18506) Loss_meta_train: 0.40717 Loss_meta_test: 29.52458 Loss_cls_train: 59.93456 Loss_cls_test: 29.34133 Loss_dep_train_ave: 0.02036 Loss_dep_test: 0.01832 
+(epoch: 1, iters: 4 / 18506) Loss_meta_train: 0.81943 Loss_meta_test: 30.82453 Loss_cls_train: 59.85218 Loss_cls_test: 30.21304 Loss_dep_train_ave: 0.04097 Loss_dep_test: 0.06115 

@@ -1,0 +1,38 @@
+============================================================
+Model 001 
+TP:16289, TN:105074,  FP:56904,  FN:23279
+accuracy:0.602160
+precision:0.222549
+recall:0.411671
+f_measure:0.288912
+sensitivity:0.411671
+specificity:0.648693
+error_rate:0.397840
+apcer:0.351307
+bpcer:0.588329
+acer:0.469818
+eer:0.451807
+hter:0.451807
+TPR@FPR=10E-3:0.550136
+TPR@FPR=5E-3:0.550136
+TPR@FPR=10E-4:0.550136
+
+============================================================
+Model 002 
+TP:22269, TN:84142,  FP:77836,  FN:17299
+accuracy:0.527974
+precision:0.222456
+recall:0.562803
+f_measure:0.318873
+sensitivity:0.562803
+specificity:0.519466
+error_rate:0.472026
+apcer:0.480534
+bpcer:0.437197
+acer:0.458866
+eer:0.459366
+hter:0.458563
+TPR@FPR=10E-3:0.425163
+TPR@FPR=5E-3:0.425163
+TPR@FPR=10E-4:0.425163
+

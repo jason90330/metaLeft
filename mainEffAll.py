@@ -130,16 +130,16 @@ if __name__ == '__main__':
     # parser.add_argument('--dataset_target', type=str, default='MSU')
     
     #ICM    
-    parser.add_argument('--dataset1', type=str, default='idiap')
-    parser.add_argument('--dataset2', type=str, default='CASIA')
-    parser.add_argument('--dataset3', type=str, default='MSU')
-    parser.add_argument('--dataset_target', type=str, default='OULU')
-
-    #OCM
-    # parser.add_argument('--dataset1', type=str, default='OULU')
+    # parser.add_argument('--dataset1', type=str, default='idiap')
     # parser.add_argument('--dataset2', type=str, default='CASIA')
     # parser.add_argument('--dataset3', type=str, default='MSU')
-    # parser.add_argument('--dataset_target', type=str, default='idiap')     
+    # parser.add_argument('--dataset_target', type=str, default='OULU')
+
+    #OCM
+    parser.add_argument('--dataset1', type=str, default='OULU')
+    parser.add_argument('--dataset2', type=str, default='CASIA')
+    parser.add_argument('--dataset3', type=str, default='MSU')
+    parser.add_argument('--dataset_target', type=str, default='idiap')     
    
 
     # model
@@ -182,7 +182,9 @@ if __name__ == '__main__':
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_dct')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_equal')#worse than not equal
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_RGB_DCT')#need to test
-    parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW')
+    # parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW')
+    # parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW_pre')
+    parser.add_argument('--results_path', type=str, default='./results/OCM_efficient_b0_woFocalW')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_focal')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_lambda')
