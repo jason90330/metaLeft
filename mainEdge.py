@@ -10,8 +10,8 @@ from core.trainCustomEffAll import Train
 # from core.trainCustomEffAllBalance import Train
 # from core.trainCustomEffOptimize import Train
 # from core import Test
-from core.testCustom import Test
-# from core.testArcface import Test
+# from core.testCustom import Test
+from core.testArcface import Test
 # from core import Train, Test
 from datasets.DatasetLoaderCustom import get_dataset_loader
 # from datasets.DatasetLoaderBalance import get_dataset_loader
@@ -174,8 +174,8 @@ if __name__ == '__main__':
     parser.add_argument('--optimizer', type=str, default='adam')
 
     # # # # training configs
-    parser.add_argument('--training_type', type=str, default='Train')
-    # parser.add_argument('--training_type', type=str, default='Test')
+    # parser.add_argument('--training_type', type=str, default='Train')
+    parser.add_argument('--training_type', type=str, default='Test')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_ori')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_efficient_b0')
     # parser.add_argument('--results_path', type=str, default='./results/CelebA_efficient_b4_arc_focal')
@@ -201,7 +201,7 @@ if __name__ == '__main__':
     parser.add_argument('--tstdataset', type=str, default='MSU')
     parser.add_argument('--tst_txt_name', type=str, default='testScore.txt')
     parser.add_argument('--snapshotnum', type=str, default='1')
-    parser.add_argument('--test_batchsize', type=int, default=180)
+    parser.add_argument('--test_batchsize', type=int, default=20)
     parser.add_argument('--test_model_num', type=int, default=1)
 
     parser.add_argument('--epochs', type=int, default=20)

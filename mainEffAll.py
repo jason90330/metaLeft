@@ -4,6 +4,9 @@ import argparse
 
 import torch
 from torch import nn
+from torchsummary import summary
+from thop import profile
+from thop import clever_format
 from tensorboardX import SummaryWriter
 # from core.trainCustom import Train
 from core.trainCustomEffAll import Train
@@ -76,6 +79,28 @@ def main(args):
         FeatExtor = init_model(net=FeatExtmodel, init_type = args.init_type, restore=FeatExt_restore, pretrain = args.pretrain, parallel_reload=True)
         DepthEstor= init_model(net=DepthEstmodel, init_type = args.init_type, restore=DepthEst_restore, pretrain = False, parallel_reload=True)
         FeatEmbder= init_model(net=FeatEmbdmodel, init_type = args.init_type, restore=FeatEmbd_restore, pretrain = args.pretrain, parallel_reload=False)
+
+        summary(FeatExtor, (6, 256, 256))
+        summary(DepthEstor, (32, 128, 128))
+        summary(FeatEmbder, (32, 128, 128))
+
+        input_feat = torch.randn(1, 6, 256, 256).cuda()
+        macs, params = profile(FeatExtor, inputs=(input_feat, ))
+        macs, params = clever_format([macs, params], "%.3f")
+        print(macs)
+        print(params)
+
+        input_embd = torch.randn(1, 32, 128, 128).cuda()
+        macs, params = profile(FeatEmbder, inputs=(input_embd, ))
+        macs, params = clever_format([macs, params], "%.3f")
+        print(macs)
+        print(params)
+        
+        input_dep = torch.randn(1, 32, 128, 128).cuda()
+        macs, params = profile(DepthEstor, inputs=(input_dep, ))
+        macs, params = clever_format([macs, params], "%.3f")
+        print(macs)
+        print(params)
 
         print(">>> FeatExtor <<<")
         print(FeatExtor)

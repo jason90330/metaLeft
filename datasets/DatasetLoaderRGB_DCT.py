@@ -48,13 +48,13 @@ def freq_domain(input):
 
 def OriImg_loader(path):
     RGBimg = Image.open(path).convert('RGB')
-    # HSVimg = Image.open(path).convert('HSV')
+    HSVimg = Image.open(path).convert('HSV')
     # RGBimg = RGBimg.resize((380,380))
     # HSVimg = HSVimg.resize((380,380))
     RGBimg = RGBimg.resize((256,256))
     DCTimg = freq_domain(RGBimg)
-    # HSVimg = HSVimg.resize((256,256))
-    return RGBimg, DCTimg
+    HSVimg = HSVimg.resize((256,256))
+    return RGBimg, HSVimg, DCTimg
 
 def DepthImg_loader(path,imgsize=128):
     img = Image.open(path)
@@ -166,17 +166,18 @@ class DatasetLoader(Dataset):
         # ori_img_dir_all = os.path.join(ori_img_dir)
         # depth_img_dir_all = os.path.join(depth_img_dir)
 
-        ori_rgbimg, ori_dctimg = self.oriimg_loader(ori_img_dir)
+        ori_rgbimg, ori_hsvimg, ori_dctimg = self.oriimg_loader(ori_img_dir)
         depth_img = self.depthimg_loader(depth_img_dir)
 
         if self.transform is not None:
             ori_rgbimg = self.transform(ori_rgbimg)
+            ori_hsvimg = self.transform(ori_hsvimg)
             ori_dctimg = ori_dctimg#self.transform(ori_dctimg)
             # ori_hsvimg = self.transform(ori_hsvimg)
             depth_img = self.transform(depth_img)
 
-            ori_catimg = torch.cat([ori_rgbimg,ori_dctimg],0)
-        return ori_catimg, depth_img, label
+            ori_catimg = torch.cat([ori_rgbimg,ori_hsvimg], 0)
+        return ori_catimg, ori_dctimg, depth_img, label
 
     def __len__(self):
         return len(self.imgs)

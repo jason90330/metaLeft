@@ -17,7 +17,7 @@ def names():
     return sorted(__factory.keys())
 
 
-def create(name, pretrain = True, *args, **kwargs):
+def create(name, pretrain = True, mode="rgb", *args, **kwargs):
     """
     Create a model instance.
 
@@ -52,9 +52,15 @@ def create(name, pretrain = True, *args, **kwargs):
     if name == "Eff_FeatExtractor":
         if pretrain:
             # return FeatExtractor.from_pretrained(eff_name,in_channels=3)#dct mode
-            return FeatExtractor.from_pretrained(eff_name,in_channels=6)#rgb mode
+            if mode == "rgb":
+                return FeatExtractor.from_pretrained(eff_name,in_channels=6)#rgb mode
+            else:
+                return FeatExtractor.from_pretrained(eff_name,in_channels=3)#dct mode
         else:
-            return FeatExtractor.from_name(eff_name,in_channels=6)
+            if mode == "rgb":
+                return FeatExtractor.from_name(eff_name,in_channels=6)
+            else:
+                return FeatExtractor.from_name(eff_name,in_channels=3)
 
     elif name == "Eff_FeatEmbedder":
         if pretrain:

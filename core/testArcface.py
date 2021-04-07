@@ -78,8 +78,10 @@ def Test(args, FeatExtor, FeatEmbder,
     FeatExtor.eval()
     FeatEmbder.eval()
     Head = ArcFace(in_features=1000, out_features=2, device_id=[0,1])
+    # Head = ArcFace(in_features=1000, out_features=2, device_id=[1])
     head_path = osp.join(args.results_path, "model", 'Head-'+str(modelIdx)+'.pt')
     checkpoint_head = torch.load(head_path, map_location={'cuda:1':'cuda:0'})
+    # checkpoint_head = torch.load(head_path, map_location='cuda:1')
     Head.load_state_dict(checkpoint_head)
     Head.eval()
 

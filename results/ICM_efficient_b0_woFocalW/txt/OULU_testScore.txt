@@ -36,3 +36,117 @@ TPR@FPR=10E-3:0.425163
 TPR@FPR=5E-3:0.425163
 TPR@FPR=10E-4:0.425163
 
+============================================================
+Model 003 
+TP:31735, TN:65411,  FP:96567,  FN:7833
+accuracy:0.482004
+precision:0.247346
+recall:0.802037
+f_measure:0.378090
+sensitivity:0.802037
+specificity:0.403826
+error_rate:0.517996
+apcer:0.596174
+bpcer:0.197963
+acer:0.397068
+eer:0.415376
+hter:0.395836
+TPR@FPR=10E-3:0.338237
+TPR@FPR=5E-3:0.338237
+TPR@FPR=10E-4:0.338237
+
+============================================================
+Model 004 
+TP:17920, TN:106113,  FP:55865,  FN:21648
+accuracy:0.615408
+precision:0.242868
+recall:0.452891
+f_measure:0.316180
+sensitivity:0.452891
+specificity:0.655107
+error_rate:0.384592
+apcer:0.344893
+bpcer:0.547109
+acer:0.446001
+eer:0.433813
+hter:0.433813
+TPR@FPR=10E-3:0.563910
+TPR@FPR=5E-3:0.563910
+TPR@FPR=10E-4:0.563910
+
+============================================================
+Model 005 
+TP:21690, TN:96814,  FP:65164,  FN:17878
+accuracy:0.587975
+precision:0.249729
+recall:0.548170
+f_measure:0.343136
+sensitivity:0.548170
+specificity:0.597698
+error_rate:0.412025
+apcer:0.402302
+bpcer:0.451830
+acer:0.427066
+eer:0.422998
+hter:0.419665
+TPR@FPR=10E-3:0.496320
+TPR@FPR=5E-3:0.496320
+TPR@FPR=10E-4:0.496320
+
+============================================================
+Model 006 
+TP:18628, TN:120679,  FP:41299,  FN:20940
+accuracy:0.691192
+precision:0.310845
+recall:0.470784
+f_measure:0.374451
+sensitivity:0.470784
+specificity:0.745033
+error_rate:0.308808
+apcer:0.254967
+bpcer:0.529216
+acer:0.392091
+eer:0.379018
+hter:0.379018
+TPR@FPR=10E-3:0.668597
+TPR@FPR=5E-3:0.668597
+TPR@FPR=10E-4:0.668597
+
+============================================================
+Model 007 
+TP:24963, TN:93209,  FP:68769,  FN:14605
+accuracy:0.586328
+precision:0.266323
+recall:0.630889
+f_measure:0.374539
+sensitivity:0.630889
+specificity:0.575442
+error_rate:0.413672
+apcer:0.424558
+bpcer:0.369111
+acer:0.396835
+eer:0.397511
+hter:0.396601
+TPR@FPR=10E-3:0.493178
+TPR@FPR=5E-3:0.493178
+TPR@FPR=10E-4:0.493178
+
+============================================================
+Model 008 
+TP:19156, TN:112536,  FP:49442,  FN:20412
+accuracy:0.653409
+precision:0.279250
+recall:0.484129
+f_measure:0.354196
+sensitivity:0.484129
+specificity:0.694761
+error_rate:0.346591
+apcer:0.305239
+bpcer:0.515871
+acer:0.410555
+eer:0.392600
+hter:0.392600
+TPR@FPR=10E-3:0.631222
+TPR@FPR=5E-3:0.631222
+TPR@FPR=10E-4:0.631222
+

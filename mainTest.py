@@ -176,7 +176,8 @@ if __name__ == '__main__':
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_equal')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_dct')
     # parser.add_argument('--results_path', type=str, default='./results/OIC_efficient_b0_woFocalW_RGB_DCT')
-    parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW')
+    # parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW')
+    parser.add_argument('--results_path', type=str, default='./results/ICM_efficient_b0_woFocalW_pre')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_focal')
     # parser.add_argument('--results_path', type=str, default='./results/Train_CelebA_lambda')
@@ -193,7 +194,7 @@ if __name__ == '__main__':
     parser.add_argument('--tst_txt_name', type=str, default='testScore.txt')
     parser.add_argument('--snapshotnum', type=str, default='1')
     parser.add_argument('--test_batchsize', type=int, default=50)
-    parser.add_argument('--test_model_num', type=int, default=8)
+    parser.add_argument('--test_model_num', type=int, default=9)
 
     parser.add_argument('--epochs', type=int, default=10)
     parser.add_argument('--log_step', type=int, default=2)

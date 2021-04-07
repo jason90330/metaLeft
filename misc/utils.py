@@ -218,8 +218,8 @@ def save_image(image_numpy, image_path):
 def get_inf_iterator(data_loader):
     """Inf data iterator."""
     while True:
-        for catimages, depthimages, labels in data_loader:
-            yield (catimages, depthimages, labels)
+        for catimages_rgb, catimages_dct, depthimages, labels in data_loader:
+            yield (catimages_rgb, catimages_dct, depthimages, labels)
 
 def get_inf_iterator_tst(data_loader):
     """Inf data iterator."""
